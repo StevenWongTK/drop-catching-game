@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-//<{src: string}>
 const SDrops = styled.img<{ x: number; y: number }>`
     position: absolute;
     width: 40px;
@@ -9,7 +8,7 @@ const SDrops = styled.img<{ x: number; y: number }>`
     top: ${(props) => props.y}px;
 `
 
-export const Drops = ({
+export const Drop = ({
     image,
     x,
     y,

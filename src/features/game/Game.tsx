@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useRef } from 'react'
-import { Drops } from '../../components/Drops/Drops'
+import { useEffect, useRef } from 'react'
+import { Drop } from '../../components/Drop/Drop'
 import { useGame } from './useGame'
-import { DROP_SPEED, DROP_INTERVAL } from './constants'
+import { DROP_INTERVAL } from './constants'
 import styled from 'styled-components'
+import { Catch } from '../../components/Catch/Catch'
 
 const SField = styled.div`
     width: 500px;
@@ -11,37 +12,19 @@ const SField = styled.div`
 `
 
 export const Game = () => {
-    const {
-        isStarted,
-        setIsStarted,
-        dropsList,
-        setDropsList,
-        // onDropsCaugth,
-        spawnDrops,
-    } = useGame()
     const fieldRef = useRef<HTMLDivElement>(null)
     const intervalRef = useRef<ReturnType<typeof setInterval>>()
     const requestRef = useRef<number>(0)
 
-    const advanceStep = useCallback(() => {
-        setDropsList((oldList) => {
-            const newDropsList = []
-            for (const drops of oldList) {
-                console.log('has drops')
-                const newY = drops.y + DROP_SPEED / 60
-                console.log('newY', newY)
-                if (fieldRef.current && newY <= fieldRef.current.offsetHeight) {
-                    newDropsList.push({
-                        ...drops,
-                        y: newY,
-                    })
-                }
-            }
-            return newDropsList
-        })
-
-        requestRef.current = requestAnimationFrame(advanceStep)
-    }, [setDropsList])
+    const {
+        isStarted,
+        setIsStarted,
+        drops,
+        spawnDrops,
+        catchX,
+        onCursorMove,
+        advanceStep,
+    } = useGame(fieldRef, requestRef)
 
     useEffect(() => {
         const stop = () => {
@@ -49,6 +32,7 @@ export const Game = () => {
             requestRef.current && cancelAnimationFrame(requestRef.current)
         }
         if (isStarted) {
+            console.log('looping')
             intervalRef.current = setInterval(spawnDrops, DROP_INTERVAL)
             requestRef.current = requestAnimationFrame(advanceStep)
         } else {
@@ -58,23 +42,24 @@ export const Game = () => {
     }, [advanceStep, isStarted, spawnDrops])
 
     return (
-        <SField className='field' ref={fieldRef}>
+        <SField className='field' ref={fieldRef} onMouseMove={onCursorMove}>
             <button onClick={() => setIsStarted(!isStarted)}>{'start'}</button>
-            {dropsList.map((drops, index) => {
+            {drops.map((drop, index) => {
                 //TODO 20 is hardcoded
                 const x = fieldRef.current
-                    ? ((fieldRef.current.offsetWidth - 20) * drops.x) / 100
-                    : drops.x
+                    ? ((fieldRef.current.offsetWidth - 20) * drop.x) / 100
+                    : drop.x
                 return (
-                    <Drops
-                        key={`drops-${index}`}
-                        {...drops}
+                    <Drop
+                        key={`drop-${index}`}
+                        {...drop}
                         x={x}
                         // index={index}
                         // onClick={onDotClick}
                     />
                 )
             })}
+            <Catch x={catchX} y={400}></Catch>
         </SField>
     )
 }
