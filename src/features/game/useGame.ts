@@ -73,7 +73,7 @@ export const useGame = (
     }
 
     const updateCatchX = useCallback(() => {
-        setCatchX((oldCatchX, cursorX) => {
+        setCatchX((oldCatchX) => {
             const detlaX = cursorX - oldCatchX
             if (5 > detlaX && detlaX > -5) {
                 return oldCatchX
