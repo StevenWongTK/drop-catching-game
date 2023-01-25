@@ -6,4 +6,17 @@ export default {
     component: Menu,
 } as ComponentMeta<typeof Menu>
 
-export const Default: ComponentStory<typeof Menu> = () => <Menu />
+const startGame = () => {
+    console.log('Start Game Button Clicked!')
+}
+
+const openLeaderboard = () => {
+    console.log('Open Leaderboard Button Clicked!')
+}
+
+export const Default: ComponentStory<typeof Menu> = () => (
+    <Menu
+        onStartGameButton={startGame}
+        onOpenLeaderboardButton={openLeaderboard}
+    />
+)

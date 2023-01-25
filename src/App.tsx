@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import bg2 from './assets/bg2.png'
 import { MenuContainer } from './features/menu/MenuContainer'
+import { LeaderboardContainer } from './features/leaderboard/LeaderboardContainer'
+import { Game } from './features/game/Game'
 
 // TODO: remove
 // #1c242f
@@ -15,7 +17,9 @@ const SApp = styled.div<{ src: string }>`
 const App = () => {
     return (
         <SApp src={bg2}>
+            <Game />
             <MenuContainer />
+            <LeaderboardContainer />
         </SApp>
     )
 }

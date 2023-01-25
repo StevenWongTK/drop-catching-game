@@ -1,5 +1,17 @@
+import styled from 'styled-components'
 import { Leaderboard } from '../../components/leaderboard/Leaderboard'
+import {
+    closeLeaderboardAction,
+    isLeaderboardOpenedSelector,
+} from '../../store/slice'
+import { useSelector, useDispatch } from 'react-redux'
 
+const SLeaderboardWrapper = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+`
 const mockedRecords = [
     { name: 'apple', score: 12345 },
     { name: 'bsado', score: 10345 },
@@ -15,5 +27,21 @@ const mockedRecords = [
 ]
 
 export const LeaderboardContainer = () => {
-    return <Leaderboard leaderRecords={mockedRecords}></Leaderboard>
+    const isLeaderboardOpened = useSelector(isLeaderboardOpenedSelector)
+    const dispatch = useDispatch()
+
+    const closeLeaderboard = () => {
+        dispatch(closeLeaderboardAction())
+    }
+
+    return isLeaderboardOpened ? (
+        <SLeaderboardWrapper>
+            <Leaderboard
+                leaderRecords={mockedRecords}
+                onPreviousButton={closeLeaderboard}
+            />
+        </SLeaderboardWrapper>
+    ) : (
+        <></>
+    )
 }

@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 import { MenuButton } from '../menu-button/MenuButton'
-import { useDispatch } from 'react-redux'
-import { closeMenu } from '../../store/slice'
 
 const SMenu = styled.div`
     width: 300px;
@@ -23,20 +21,18 @@ const STitle = styled.div`
     margin-bottom: 20px;
 `
 
-const onClick = () => {
-    console.log('click')
-}
-
-export const Menu = () => {
-    const dispatch = useDispatch()
+export const Menu = ({
+    onStartGameButton,
+    onOpenLeaderboardButton,
+}: {
+    onStartGameButton: () => void
+    onOpenLeaderboardButton: () => void
+}) => {
     return (
         <SMenu>
             <STitle>{'Game'}</STitle>
-            <MenuButton
-                label='Start Game'
-                onClick={() => dispatch(closeMenu())}
-            />
-            <MenuButton label='Leaderboard' onClick={onClick} />
+            <MenuButton label='Start Game' onClick={onStartGameButton} />
+            <MenuButton label='Leaderboard' onClick={onOpenLeaderboardButton} />
         </SMenu>
     )
 }

@@ -2,21 +2,35 @@ import { createSlice, createSelector } from '@reduxjs/toolkit'
 
 interface IStore {
     isMenuOpened: boolean
+    isLeaderboardOpened: boolean
+    isGameFieldOpened: boolean
 }
 
 const initialState = {
     isMenuOpened: true,
+    isLeaderboardOpened: false,
+    isGameFieldOpened: false,
 } as IStore
 
 const storeSlice = createSlice({
     name: 'store',
     initialState,
     reducers: {
-        openMenu: (state) => {
+        // TODO: Combine some of action later
+        openMenuAction: (state) => {
             state.isMenuOpened = true
         },
-        closeMenu: (state) => {
+        closeMenuAction: (state) => {
             state.isMenuOpened = false
+        },
+        openLeaderboardAction: (state) => {
+            state.isLeaderboardOpened = true
+        },
+        closeLeaderboardAction: (state) => {
+            state.isLeaderboardOpened = false
+        },
+        openGameFieldAction: (state) => {
+            state.isGameFieldOpened = true
         },
     },
 })
@@ -26,7 +40,25 @@ const isMenuOpenedSelector = createSelector(
     selfSelector,
     (state: IStore) => state.isMenuOpened
 )
+const isLeaderboardOpenedSelector = createSelector(
+    selfSelector,
+    (state: IStore) => state.isLeaderboardOpened
+)
+const isGameFieldOpenedSelector = createSelector(
+    selfSelector,
+    (state: IStore) => state.isGameFieldOpened
+)
 
-export const { openMenu, closeMenu } = storeSlice.actions
-export { isMenuOpenedSelector }
+export const {
+    openMenuAction,
+    closeMenuAction,
+    openLeaderboardAction,
+    closeLeaderboardAction,
+    openGameFieldAction,
+} = storeSlice.actions
+export {
+    isMenuOpenedSelector,
+    isLeaderboardOpenedSelector,
+    isGameFieldOpenedSelector,
+}
 export default storeSlice.reducer

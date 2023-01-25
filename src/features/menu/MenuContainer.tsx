@@ -1,7 +1,12 @@
 import styled from 'styled-components'
 import { Menu } from '../../components/menu/Menu'
-import { isMenuOpenedSelector } from '../../store/slice'
-import { useSelector } from 'react-redux/es/exports'
+import {
+    closeMenuAction,
+    isMenuOpenedSelector,
+    openGameFieldAction,
+    openLeaderboardAction,
+} from '../../store/slice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const SMenuWrapper = styled.div`
     position: absolute;
@@ -11,9 +16,23 @@ const SMenuWrapper = styled.div`
 `
 export const MenuContainer = () => {
     const isMenuOpened = useSelector(isMenuOpenedSelector)
+    const dispatch = useDispatch()
+
+    const startGame = () => {
+        dispatch(closeMenuAction())
+        dispatch(openGameFieldAction())
+    }
+
+    const openLeaderboard = () => {
+        dispatch(openLeaderboardAction())
+    }
+
     return isMenuOpened ? (
         <SMenuWrapper>
-            <Menu />
+            <Menu
+                onStartGameButton={startGame}
+                onOpenLeaderboardButton={openLeaderboard}
+            />
         </SMenuWrapper>
     ) : (
         <></>

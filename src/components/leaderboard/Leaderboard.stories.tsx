@@ -20,6 +20,12 @@ const mockedRecords = [
     { name: 'kajido', score: 802 },
 ]
 
+const closeLeaderboard = () => {
+    console.log('Close Leaderboard Button Clicked!')
+}
 export const Default: ComponentStory<typeof Leaderboard> = () => (
-    <Leaderboard leaderRecords={mockedRecords} />
+    <Leaderboard
+        leaderRecords={mockedRecords}
+        onPreviousButton={closeLeaderboard}
+    />
 )

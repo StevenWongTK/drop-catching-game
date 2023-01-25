@@ -4,15 +4,24 @@ import { useGame } from './useGame'
 import { CATCHER_SIZE, DROP_INTERVAL } from './constants'
 import styled from 'styled-components'
 import { Catcher } from '../../components/catcher/Catcher'
+import { useSelector } from 'react-redux'
+import { isGameFieldOpenedSelector } from '../../store/slice'
+import bg1 from '../../assets/bg1.png'
 
-const SField = styled.div`
-    position: relative;
+const SField = styled.div<{ src: string }>`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 500px;
     height: 500px;
     border: 1px solid #000;
+    background-image: url(${(props) => props.src});
+    background-size: cover;
 `
 
 export const Game = () => {
+    const isGameFieldOpened = useSelector(isGameFieldOpenedSelector)
     const fieldRef = useRef<HTMLDivElement>(null)
     const intervalRef = useRef<ReturnType<typeof setInterval>>()
     const requestRef = useRef<number>(0)
@@ -53,8 +62,8 @@ export const Game = () => {
         return () => stop()
     }, [advanceStep, isStarted])
 
-    return (
-        <SField ref={fieldRef} onMouseMove={onCursorMove}>
+    return isGameFieldOpened ? (
+        <SField src={bg1} ref={fieldRef} onMouseMove={onCursorMove}>
             <button onClick={() => setIsStarted(!isStarted)}>{'start'}</button>
             <div>{`Score: ${score}`}</div>
             {drops.map((drop, index) => {
@@ -67,5 +76,7 @@ export const Game = () => {
                 size={CATCHER_SIZE}
             ></Catcher>
         </SField>
+    ) : (
+        <></>
     )
 }

@@ -9,6 +9,10 @@ const SContainer = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 8px;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    background-color: #556e84;
+    padding-top: 16px;
 `
 
 const STitle = styled.div`
@@ -30,10 +34,24 @@ const SRecordsContainer = styled.div`
     }
 `
 
+const SPrevioudButton = styled.div`
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+`
+
 export const Leaderboard = ({
     leaderRecords,
+    onPreviousButton,
 }: {
     leaderRecords: ILeaderRecord[]
+    onPreviousButton: () => void
 }) => {
     return (
         <SContainer>
@@ -48,6 +66,7 @@ export const Leaderboard = ({
                     ></LeaderboardRow>
                 ))}
             </SRecordsContainer>
+            <SPrevioudButton onClick={onPreviousButton}>{'<'}</SPrevioudButton>
         </SContainer>
     )
 }
