@@ -58,14 +58,7 @@ export const Game = () => {
             <button onClick={() => setIsStarted(!isStarted)}>{'start'}</button>
             <div>{`Score: ${score}`}</div>
             {drops.map((drop, index) => {
-                return (
-                    <Drop
-                        key={`drop-${index}`}
-                        {...drop}
-                        // index={index}
-                        // onClick={onDotClick}
-                    />
-                )
+                return <Drop key={`drop-${index}`} {...drop} />
             })}
             <Catcher
                 image={catcher.image}
