@@ -75,7 +75,13 @@ export const useGame = (
     }, [catcher, fieldRef, score])
 
     const onCursorMove = (event: MouseEvent) => {
-        setCursorX(event.pageX)
+        if (!fieldRef.current) {
+            return
+        }
+        setCursorX(
+            event.clientX -
+                (fieldRef.current.offsetLeft - fieldRef.current.offsetWidth / 2)
+        )
     }
 
     const updateCatcher = useCallback(() => {

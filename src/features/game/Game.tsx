@@ -18,6 +18,7 @@ const SField = styled.div<{ src: string }>`
     border: 1px solid #000;
     background-image: url(${(props) => props.src});
     background-size: cover;
+    overflow: hidden;
 `
 
 export const Game = () => {
