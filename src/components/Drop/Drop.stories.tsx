@@ -8,5 +8,5 @@ export default {
 } as ComponentMeta<typeof Drop>
 
 export const Default: ComponentStory<typeof Drop> = () => (
-    <Drop image={e1} x={50} y={50} />
+    <Drop image={e1} x={50} y={50} size={40} />
 )

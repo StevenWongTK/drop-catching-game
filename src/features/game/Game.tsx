@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react'
-import { Drop } from '../../components/Drop/Drop'
+import { Drop } from '../../components/drop/Drop'
 import { useGame } from './useGame'
-import { DROP_INTERVAL } from './constants'
+import { CATCHER_SIZE, DROP_INTERVAL } from './constants'
 import styled from 'styled-components'
-import { Catch } from '../../components/Catch/Catch'
+import { Catcher } from '../../components/catcher/Catcher'
 
 const SField = styled.div`
+    position: relative;
     width: 500px;
     height: 500px;
     border: 1px solid #000;
@@ -21,7 +22,8 @@ export const Game = () => {
         setIsStarted,
         drops,
         spawnDrops,
-        catchX,
+        catcher,
+        score,
         onCursorMove,
         advanceStep,
     } = useGame(fieldRef, requestRef)
@@ -29,37 +31,48 @@ export const Game = () => {
     useEffect(() => {
         const stop = () => {
             intervalRef.current && clearInterval(intervalRef.current)
+        }
+        if (isStarted) {
+            intervalRef.current = setInterval(spawnDrops, DROP_INTERVAL)
+        } else {
+            stop()
+        }
+        return () => stop()
+    }, [isStarted, spawnDrops])
+
+    useEffect(() => {
+        const stop = () => {
             requestRef.current && cancelAnimationFrame(requestRef.current)
         }
         if (isStarted) {
             console.log('looping')
-            intervalRef.current = setInterval(spawnDrops, DROP_INTERVAL)
             requestRef.current = requestAnimationFrame(advanceStep)
         } else {
             stop()
         }
         return () => stop()
-    }, [advanceStep, isStarted, spawnDrops])
+    }, [advanceStep, isStarted])
 
     return (
-        <SField className='field' ref={fieldRef} onMouseMove={onCursorMove}>
+        <SField ref={fieldRef} onMouseMove={onCursorMove}>
             <button onClick={() => setIsStarted(!isStarted)}>{'start'}</button>
+            <div>{`Score: ${score}`}</div>
             {drops.map((drop, index) => {
-                //TODO 20 is hardcoded
-                const x = fieldRef.current
-                    ? ((fieldRef.current.offsetWidth - 20) * drop.x) / 100
-                    : drop.x
                 return (
                     <Drop
                         key={`drop-${index}`}
                         {...drop}
-                        x={x}
                         // index={index}
                         // onClick={onDotClick}
                     />
                 )
             })}
-            <Catch x={catchX} y={400}></Catch>
+            <Catcher
+                image={catcher.image}
+                x={catcher.x}
+                y={400}
+                size={CATCHER_SIZE}
+            ></Catcher>
         </SField>
     )
 }

@@ -6,91 +6,98 @@ import {
     useState,
 } from 'react'
 import {
-    CATCH_SPEED,
+    CATCHER_SPEED,
+    DEFAULT_CATCHER,
     DROPS_LIST,
     DROPS_SCORE_MAP,
+    DROP_SIZE,
     DROP_SPEED,
 } from './constants'
-import { IDrops } from './types'
+import { ICatcher, IDrop } from './types'
+import { checkColliding } from './helper'
 
 export const useGame = (
     fieldRef: RefObject<HTMLDivElement>,
     requestRef: MutableRefObject<number>
 ) => {
     const [isStarted, setIsStarted] = useState(false)
-    const [drops, setDrops] = useState<IDrops[]>([])
+    const [drops, setDrops] = useState<IDrop[]>([])
+    const [catcher, setCatcher] = useState<ICatcher>(DEFAULT_CATCHER)
     const [score, setScore] = useState(0)
     const [cursorX, setCursorX] = useState(0)
-    const [catchX, setCatchX] = useState(50)
 
-    const createDrops = () => {
+    const createDrops = useCallback(() => {
+        if (!fieldRef.current) {
+            return {} as IDrop
+        }
         const image = DROPS_LIST[Math.floor(Math.random() * DROPS_LIST.length)]
-        const x = Math.floor(Math.random() * 100)
+        const x =
+            (Math.floor(Math.random() * 100) * fieldRef.current.offsetWidth) /
+            100
         const score = DROPS_SCORE_MAP[image]
 
         return {
             image,
             x,
             y: 0,
+            size: DROP_SIZE,
             score,
         }
-    }
-
-    const removeDrops = (drops: IDrops[], index: number) => {
-        const newList = [...drops]
-        newList.splice(index, 1)
-        return newList
-    }
+    }, [fieldRef])
 
     const spawnDrops = useCallback(() => {
         console.log('spawnDrops')
-        setDrops((oldList) => [...oldList, createDrops()])
-    }, [])
+        setDrops((oldDrops) => [...oldDrops, createDrops()])
+    }, [createDrops])
 
     const updateDropY = useCallback(() => {
-        setDrops((oldList) => {
-            const newDrops: IDrops[] = []
-            for (const drop of oldList) {
+        setDrops((oldDrops) => {
+            const newDrops: IDrop[] = []
+            oldDrops.forEach((drop) => {
                 const newY = drop.y + DROP_SPEED / 60
-                if (fieldRef.current && newY <= fieldRef.current.offsetHeight) {
+                const isColliding = checkColliding(drop, catcher)
+                if (isColliding) {
+                    setScore(score + drop.score)
+                }
+                if (
+                    fieldRef.current &&
+                    newY <= fieldRef.current.offsetHeight &&
+                    !isColliding
+                ) {
                     newDrops.push({
                         ...drop,
                         y: newY,
                     })
                 }
-            }
+            })
             return newDrops
         })
-    }, [fieldRef])
-
-    const onDropsCaugth = (index: number) => {
-        setScore(score + drops[index].score)
-        setDrops(removeDrops(drops, index))
-    }
+    }, [catcher, fieldRef, score])
 
     const onCursorMove = (event: MouseEvent) => {
         setCursorX(event.pageX)
     }
 
-    const updateCatchX = useCallback(() => {
-        setCatchX((oldCatchX) => {
-            const detlaX = cursorX - oldCatchX
+    const updateCatcher = useCallback(() => {
+        setCatcher((oldCatcher) => {
+            const detlaX = cursorX - oldCatcher.x
+            let newCatcherX
             if (5 > detlaX && detlaX > -5) {
-                return oldCatchX
+                newCatcherX = oldCatcher.x
             } else if (detlaX > 1) {
-                return oldCatchX + CATCH_SPEED / 60
+                newCatcherX = oldCatcher.x + CATCHER_SPEED / 60
             } else {
-                return oldCatchX - CATCH_SPEED / 60
+                newCatcherX = oldCatcher.x - CATCHER_SPEED / 60
             }
+            return { ...oldCatcher, x: newCatcherX }
         })
     }, [cursorX])
 
     const advanceStep = useCallback(() => {
-        updateCatchX()
+        updateCatcher()
         updateDropY()
-
         requestRef.current = requestAnimationFrame(advanceStep)
-    }, [requestRef, updateCatchX, updateDropY])
+    }, [requestRef, updateCatcher, updateDropY])
 
     // TODO: delete unused output
     return {
@@ -98,7 +105,8 @@ export const useGame = (
         setIsStarted,
         drops,
         spawnDrops,
-        catchX,
+        catcher,
+        score,
         onCursorMove,
         advanceStep,
     }

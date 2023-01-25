@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const SDrops = styled.img<{ x: number; y: number; size: number }>`
+const SCatcher = styled.img<{ x: number; y: number; size: number }>`
     position: absolute;
     width: ${(props) => props.size}px;
     height: ${(props) => props.size}px;
@@ -9,20 +9,16 @@ const SDrops = styled.img<{ x: number; y: number; size: number }>`
     transform: translate(-50%, -50%);
 `
 
-export const Drop = ({
+export const Catcher = ({
     image,
     x,
     y,
     size,
-}: // index,
-// score,
-{
+}: {
     image: string
     x: number
     y: number
     size: number
-    // index: number
-    // score: number
 }) => {
-    return <SDrops src={image} x={x} y={y} size={size} />
+    return <SCatcher src={image} x={x} y={y} size={size} />
 }
