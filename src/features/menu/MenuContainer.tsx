@@ -5,6 +5,8 @@ import {
     isMenuOpenedSelector,
     openGameFieldAction,
     openLeaderboardAction,
+    openTutorialAction,
+    startGameAction,
 } from '../../store/slice'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -20,7 +22,12 @@ export const MenuContainer = () => {
 
     const startGame = () => {
         dispatch(closeMenuAction())
-        dispatch(openGameFieldAction())
+        if (localStorage.getItem('isTutorialSeen') === 'true') {
+            dispatch(openGameFieldAction())
+            dispatch(startGameAction())
+        } else {
+            dispatch(openTutorialAction())
+        }
     }
 
     const openLeaderboard = () => {

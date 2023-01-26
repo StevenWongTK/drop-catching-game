@@ -4,12 +4,16 @@ interface IStore {
     isMenuOpened: boolean
     isLeaderboardOpened: boolean
     isGameFieldOpened: boolean
+    isGameStarted: boolean
+    isTutorialOpened: boolean
 }
 
 const initialState = {
     isMenuOpened: true,
     isLeaderboardOpened: false,
     isGameFieldOpened: false,
+    isGameStarted: false,
+    isTutorialOpened: false,
 } as IStore
 
 const storeSlice = createSlice({
@@ -32,6 +36,18 @@ const storeSlice = createSlice({
         openGameFieldAction: (state) => {
             state.isGameFieldOpened = true
         },
+        startGameAction: (state) => {
+            state.isGameStarted = true
+        },
+        endGameAction: (state) => {
+            state.isGameStarted = false
+        },
+        openTutorialAction: (state) => {
+            state.isTutorialOpened = true
+        },
+        closeTutorialAction: (state) => {
+            state.isTutorialOpened = false
+        },
     },
 })
 
@@ -48,6 +64,14 @@ const isGameFieldOpenedSelector = createSelector(
     selfSelector,
     (state: IStore) => state.isGameFieldOpened
 )
+const isGameStartedSelector = createSelector(
+    selfSelector,
+    (state: IStore) => state.isGameStarted
+)
+const isTutorialOpenedSelector = createSelector(
+    selfSelector,
+    (state: IStore) => state.isTutorialOpened
+)
 
 export const {
     openMenuAction,
@@ -55,10 +79,16 @@ export const {
     openLeaderboardAction,
     closeLeaderboardAction,
     openGameFieldAction,
+    startGameAction,
+    endGameAction,
+    openTutorialAction,
+    closeTutorialAction,
 } = storeSlice.actions
 export {
     isMenuOpenedSelector,
     isLeaderboardOpenedSelector,
     isGameFieldOpenedSelector,
+    isGameStartedSelector,
+    isTutorialOpenedSelector,
 }
 export default storeSlice.reducer

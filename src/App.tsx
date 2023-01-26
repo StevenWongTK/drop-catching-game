@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import bg2 from './assets/bg2.png'
 import { MenuContainer } from './features/menu/MenuContainer'
 import { LeaderboardContainer } from './features/leaderboard/LeaderboardContainer'
+import { TutorialContainer } from './features/tutorial/TutorialContainer'
 import { Game } from './features/game/Game'
 
 // TODO: remove
@@ -18,6 +19,7 @@ const App = () => {
     return (
         <SApp src={bg2}>
             <Game />
+            <TutorialContainer />
             <MenuContainer />
             <LeaderboardContainer />
         </SApp>

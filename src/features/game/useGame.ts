@@ -20,7 +20,6 @@ export const useGame = (
     fieldRef: RefObject<HTMLDivElement>,
     requestRef: MutableRefObject<number>
 ) => {
-    const [isStarted, setIsStarted] = useState(false)
     const [drops, setDrops] = useState<IDrop[]>([])
     const [catcher, setCatcher] = useState<ICatcher>(DEFAULT_CATCHER)
     const [score, setScore] = useState(0)
@@ -107,8 +106,6 @@ export const useGame = (
 
     // TODO: delete unused output
     return {
-        isStarted,
-        setIsStarted,
         drops,
         spawnDrops,
         catcher,
