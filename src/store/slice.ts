@@ -36,6 +36,9 @@ const storeSlice = createSlice({
         openGameFieldAction: (state) => {
             state.isGameFieldOpened = true
         },
+        closeGameFieldAction: (state) => {
+            state.isGameFieldOpened = true
+        },
         startGameAction: (state) => {
             state.isGameStarted = true
         },
@@ -79,6 +82,7 @@ export const {
     openLeaderboardAction,
     closeLeaderboardAction,
     openGameFieldAction,
+    closeGameFieldAction,
     startGameAction,
     endGameAction,
     openTutorialAction,
