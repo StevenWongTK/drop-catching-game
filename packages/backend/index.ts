@@ -2,6 +2,8 @@ import express, { Express, Request, Response } from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import recordsRouter from './routes/RecordsRouter'
+import cors from 'cors'
+import bodyParser from 'body-parser'
 
 dotenv.config()
 
@@ -22,8 +24,12 @@ try {
 }
 
 const database = mongoose.connection
+// handle CORS
+app.use(cors())
+app.use(bodyParser.json())
 app.use('/api/record', recordsRouter)
 
+// TODO: to be removed
 app.get('/', (req: Request, res: Response) => {
     res.send('Express + TypeScript Server')
 })

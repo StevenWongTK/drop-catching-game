@@ -9,6 +9,7 @@ import {
     endGameAction,
     isGameFieldOpenedSelector,
     isGameStartedSelector,
+    openResultModalAction,
 } from '../../store/slice'
 import bg1 from '../../assets/bg1.png'
 
@@ -45,6 +46,7 @@ export const Game = () => {
             intervalRef.current = setInterval(spawnDrops, DROP_INTERVAL)
             timeoutRef.current = setTimeout(() => {
                 dispatch(endGameAction())
+                dispatch(openResultModalAction())
             }, GAME_DURATION)
         } else {
             stop()

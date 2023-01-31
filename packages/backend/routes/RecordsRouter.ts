@@ -1,10 +1,9 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import RecordModel from '../entity/Records'
 
 const recordsRouter = express.Router()
 
-//Post Method
-recordsRouter.post('/set', async (req, res) => {
+recordsRouter.post('/set', async (req: Request, res: Response) => {
     const newRecord = new RecordModel({
         name: req.body.name,
         score: req.body.score,
@@ -15,28 +14,17 @@ recordsRouter.post('/set', async (req, res) => {
     } catch (error: any) {
         res.status(400).json({ message: error.message })
     }
-
-    res.send('Post API')
 })
 
-//Get all Method
-recordsRouter.get('/getAll', (req, res) => {
-    res.send('Get All API')
-})
-
-//Get by ID Method
-recordsRouter.get('/getOne/:id', (req, res) => {
-    res.send('Get by ID API')
-})
-
-//Update by ID Method
-recordsRouter.patch('/update/:id', (req, res) => {
-    res.send('Update by ID API')
-})
-
-//Delete by ID Method
-recordsRouter.delete('/delete/:id', (req, res) => {
-    res.send('Delete by ID API')
+recordsRouter.get('/getTop', async (req: Request, res: Response) => {
+    try {
+        const data = await RecordModel.find({}, { name: 1, score: 1 })
+            .sort({ score: -1 })
+            .limit(3)
+        res.json(data)
+    } catch (error: any) {
+        res.status(500).json({ message: error.message })
+    }
 })
 
 export default recordsRouter

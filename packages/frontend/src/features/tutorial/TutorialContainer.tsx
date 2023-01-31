@@ -10,9 +10,9 @@ const STutorialWrapper = styled.div`
     transform: translate(-50%, -50%);
 `
 export const TutorialContainer = () => {
-    const isTutorialOpened = useSelector(isTutorialOpenedSelector)
+    const isOpened = useSelector(isTutorialOpenedSelector)
 
-    return isTutorialOpened ? (
+    return isOpened ? (
         <STutorialWrapper>
             <Tutorial />
         </STutorialWrapper>

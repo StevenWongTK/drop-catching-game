@@ -6,6 +6,7 @@ interface IStore {
     isGameFieldOpened: boolean
     isGameStarted: boolean
     isTutorialOpened: boolean
+    isResultModalOpened: boolean
 }
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
     isGameFieldOpened: false,
     isGameStarted: false,
     isTutorialOpened: false,
+    isResultModalOpened: false,
 } as IStore
 
 const storeSlice = createSlice({
@@ -51,6 +53,12 @@ const storeSlice = createSlice({
         closeTutorialAction: (state) => {
             state.isTutorialOpened = false
         },
+        openResultModalAction: (state) => {
+            state.isResultModalOpened = true
+        },
+        closeResultModalAction: (state) => {
+            state.isResultModalOpened = false
+        },
     },
 })
 
@@ -75,6 +83,10 @@ const isTutorialOpenedSelector = createSelector(
     selfSelector,
     (state: IStore) => state.isTutorialOpened
 )
+const isResultModalOpenedSelector = createSelector(
+    selfSelector,
+    (state: IStore) => state.isResultModalOpened
+)
 
 export const {
     openMenuAction,
@@ -87,6 +99,8 @@ export const {
     endGameAction,
     openTutorialAction,
     closeTutorialAction,
+    openResultModalAction,
+    closeResultModalAction,
 } = storeSlice.actions
 export {
     isMenuOpenedSelector,
@@ -94,5 +108,6 @@ export {
     isGameFieldOpenedSelector,
     isGameStartedSelector,
     isTutorialOpenedSelector,
+    isResultModalOpenedSelector,
 }
 export default storeSlice.reducer

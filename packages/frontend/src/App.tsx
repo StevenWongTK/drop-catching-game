@@ -4,6 +4,7 @@ import { MenuContainer } from './features/menu/MenuContainer'
 import { LeaderboardContainer } from './features/leaderboard/LeaderboardContainer'
 import { TutorialContainer } from './features/tutorial/TutorialContainer'
 import { Game } from './features/game/Game'
+import { ResultModalContainer } from './features/leaderboard/ResultModalContainer'
 
 // TODO: remove
 // #1c242f
@@ -22,6 +23,7 @@ const App = () => {
             <TutorialContainer />
             <MenuContainer />
             <LeaderboardContainer />
+            <ResultModalContainer />
         </SApp>
     )
 }

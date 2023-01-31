@@ -57,9 +57,12 @@ export const ResultModal = ({
             <SButtonGroup>
                 <MenuButton
                     label='Start New Game'
-                    onClick={onStartGameButton}
+                    onClick={() => onStartGameButton(inputRef.current?.value)}
                 />
-                <MenuButton label='Back to Menu' onClick={onBackToMenuButton} />
+                <MenuButton
+                    label='Back to Menu'
+                    onClick={() => onBackToMenuButton(inputRef.current?.value)}
+                />
             </SButtonGroup>
         </SResultModal>
     )

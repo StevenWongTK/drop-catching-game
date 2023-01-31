@@ -17,7 +17,7 @@ const SMenuWrapper = styled.div`
     transform: translate(-50%, -50%);
 `
 export const MenuContainer = () => {
-    const isMenuOpened = useSelector(isMenuOpenedSelector)
+    const isOpened = useSelector(isMenuOpenedSelector)
     const dispatch = useDispatch()
 
     const startGame = () => {
@@ -34,7 +34,7 @@ export const MenuContainer = () => {
         dispatch(openLeaderboardAction())
     }
 
-    return isMenuOpened ? (
+    return isOpened ? (
         <SMenuWrapper>
             <Menu
                 onStartGameButton={startGame}

@@ -27,14 +27,14 @@ const mockedRecords = [
 ]
 
 export const LeaderboardContainer = () => {
-    const isLeaderboardOpened = useSelector(isLeaderboardOpenedSelector)
+    const isOpened = useSelector(isLeaderboardOpenedSelector)
     const dispatch = useDispatch()
 
     const closeLeaderboard = () => {
         dispatch(closeLeaderboardAction())
     }
 
-    return isLeaderboardOpened ? (
+    return isOpened ? (
         <SLeaderboardWrapper>
             <Leaderboard
                 leaderRecords={mockedRecords}

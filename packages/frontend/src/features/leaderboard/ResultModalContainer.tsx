@@ -1,36 +1,41 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ResultModal } from '../../components/result-modal/ResultModal'
 import {
     closeGameFieldAction,
+    isResultModalOpenedSelector,
     openMenuAction,
     startGameAction,
 } from '../../store/slice'
+import { setRecord } from '../../api/api'
+import { useEffect } from 'react'
 
 export const ResultModalContainer = () => {
-    const isNewRecord = false
+    const isNewRecord = true
     const score = 123
     const dispatch = useDispatch()
+    const isOpened = useSelector(isResultModalOpenedSelector)
 
-    const saveScore = (name: string, score: number) => {
-        console.log(name + score)
-    }
+    useEffect(() => console.log('isOpened?:', isOpened), [isOpened])
+
     const handleStartGame = (name?: string) => {
-        isNewRecord && saveScore(name || '', score)
+        isNewRecord && setRecord({ name: name || '', score })
         dispatch(startGameAction)
     }
 
     const handleBackToMenu = (name?: string) => {
-        isNewRecord && saveScore(name || '', score)
+        isNewRecord && setRecord({ name: name || '', score })
         dispatch(closeGameFieldAction)
         dispatch(openMenuAction)
     }
 
-    return (
+    return isOpened ? (
         <ResultModal
-            score={123}
+            score={score}
             isNewRecord={isNewRecord}
             onStartGameButton={handleStartGame}
             onBackToMenuButton={handleBackToMenu}
         ></ResultModal>
+    ) : (
+        <></>
     )
 }
