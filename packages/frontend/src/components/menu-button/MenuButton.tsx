@@ -13,7 +13,7 @@ const SMenuButton = styled.div`
     color: #fff;
 `
 
-export const MenuButton = ({
+const MenuButton = ({
     label,
     onClick,
 }: {
@@ -22,3 +22,5 @@ export const MenuButton = ({
 }) => {
     return <SMenuButton onClick={onClick}>{label}</SMenuButton>
 }
+
+export default MenuButton

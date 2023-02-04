@@ -1,8 +1,8 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Tutorial } from './Tutorial'
+import { Provider } from 'react-redux'
+import Tutorial from './Tutorial'
 import { configureStore } from '@reduxjs/toolkit'
 import storeReducer from '../../store/slice'
-import { Provider } from 'react-redux'
 
 const store = configureStore({ reducer: { store: storeReducer } })
 

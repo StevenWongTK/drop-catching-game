@@ -1,10 +1,11 @@
 import { useEffect, useRef, useContext } from 'react'
-import { Drop } from '../../components/drop/Drop'
+import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
+import { scoreContext } from '../../App'
 import { useGame } from './useGame'
 import { CATCHER_SIZE, DROP_INTERVAL, GAME_DURATION } from './constants'
-import styled from 'styled-components'
-import { Catcher } from '../../components/catcher/Catcher'
-import { useDispatch, useSelector } from 'react-redux'
+import Catcher from '../../components/catcher/Catcher'
+import Drop from '../../components/drop/Drop'
 import {
     endGameAction,
     isGameFieldOpenedSelector,
@@ -12,7 +13,6 @@ import {
     openResultModalAction,
 } from '../../store/slice'
 import bg1 from '../../assets/bg1.png'
-import { scoreContext } from '../../App'
 
 const SField = styled.div<{ src: string }>`
     position: absolute;
@@ -27,7 +27,7 @@ const SField = styled.div<{ src: string }>`
     overflow: hidden;
 `
 
-export const Game = () => {
+const Game = () => {
     const isOpened = useSelector(isGameFieldOpenedSelector)
     const isGameStarted = useSelector(isGameStartedSelector)
     const dispatch = useDispatch()
@@ -90,3 +90,5 @@ export const Game = () => {
         <></>
     )
 }
+
+export default Game

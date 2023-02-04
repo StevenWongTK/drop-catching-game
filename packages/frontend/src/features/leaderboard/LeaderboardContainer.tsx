@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { Leaderboard } from '../../components/leaderboard/Leaderboard'
+import { useSelector, useDispatch } from 'react-redux'
+import Leaderboard from '../../components/leaderboard/Leaderboard'
 import {
     closeLeaderboardAction,
     isLeaderboardOpenedSelector,
@@ -13,7 +14,7 @@ const SLeaderboardWrapper = styled.div`
     transform: translate(-50%, -50%);
 `
 
-export const LeaderboardContainer = () => {
+const LeaderboardContainer = () => {
     const isOpened = useSelector(isLeaderboardOpenedSelector)
     const dispatch = useDispatch()
     const { records } = useLeaderboard(isOpened)
@@ -33,3 +34,5 @@ export const LeaderboardContainer = () => {
         <></>
     )
 }
+
+export default LeaderboardContainer

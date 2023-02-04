@@ -1,13 +1,13 @@
-import { STutorialBackground } from './constants'
-import { MenuButton } from '../../menu-button/MenuButton'
 import { useDispatch } from 'react-redux'
+import { STutorialBackground } from './constants'
+import MenuButton from '../../menu-button/MenuButton'
 import {
     closeTutorialAction,
     openGameFieldAction,
     startGameAction,
 } from '../../../store/slice'
 
-export const SlideFour = () => {
+const SlideFour = () => {
     const dispatch = useDispatch()
 
     const startGame = () => {
@@ -28,3 +28,5 @@ export const SlideFour = () => {
         </STutorialBackground>
     )
 }
+
+export default SlideFour

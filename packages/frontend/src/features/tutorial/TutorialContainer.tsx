@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { isTutorialOpenedSelector } from '../../store/slice'
 import { useSelector } from 'react-redux'
-import { Tutorial } from '../../components/tutorial/Tutorial'
+import { isTutorialOpenedSelector } from '../../store/slice'
+import Tutorial from '../../components/tutorial/Tutorial'
 
 const STutorialWrapper = styled.div`
     position: absolute;
@@ -9,7 +9,7 @@ const STutorialWrapper = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
 `
-export const TutorialContainer = () => {
+const TutorialContainer = () => {
     const isOpened = useSelector(isTutorialOpenedSelector)
 
     return isOpened ? (
@@ -20,3 +20,5 @@ export const TutorialContainer = () => {
         <></>
     )
 }
+
+export default TutorialContainer

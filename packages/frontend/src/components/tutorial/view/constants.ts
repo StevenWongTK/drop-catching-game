@@ -1,7 +1,7 @@
-import { SlideOne } from './SlideOne'
-import { SlideTwo } from './SlideTwo'
-import { SlideThree } from './SlideThree'
-import { SlideFour } from './SlideFour'
+import SlideOne from './SlideOne'
+import SlideTwo from './SlideTwo'
+import SlideThree from './SlideThree'
+import SlideFour from './SlideFour'
 import styled from 'styled-components'
 
 export const STutorialBackground = styled.div`

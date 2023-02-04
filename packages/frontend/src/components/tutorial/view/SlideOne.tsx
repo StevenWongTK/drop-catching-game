@@ -1,7 +1,7 @@
 import { STutorialBackground } from './constants'
 import boat from '../../../assets/boat.png'
 
-export const SlideOne = () => {
+const SlideOne = () => {
     return (
         <STutorialBackground>
             <img src={boat} alt='boat' width={40} height={40} />
@@ -9,3 +9,5 @@ export const SlideOne = () => {
         </STutorialBackground>
     )
 }
+
+export default SlideOne

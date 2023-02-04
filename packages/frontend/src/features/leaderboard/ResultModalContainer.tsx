@@ -1,5 +1,7 @@
+import { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ResultModal } from '../../components/result-modal/ResultModal'
+import styled from 'styled-components'
+import ResultModal from '../../components/result-modal/ResultModal'
 import {
     closeGameFieldAction,
     closeResultModalAction,
@@ -7,17 +9,17 @@ import {
     openLeaderboardAction,
     openMenuAction,
 } from '../../store/slice'
-import { setRecord } from '../../api/api'
-import { useEffect, useContext } from 'react'
+import { setRecords } from '../../api/api'
 import { scoreContext } from '../../App'
 
-export const ResultModalContainer = () => {
 const SResultModalContainer = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 `
+
+const ResultModalContainer = () => {
     const dispatch = useDispatch()
     const isOpened = useSelector(isResultModalOpenedSelector)
     const { score } = useContext(scoreContext)
@@ -38,3 +40,5 @@ const SResultModalContainer = styled.div`
         <></>
     )
 }
+
+export default ResultModalContainer

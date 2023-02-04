@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Leaderboard } from './Leaderboard'
+import Leaderboard from './Leaderboard'
 
 export default {
     title: 'Leaderboard',

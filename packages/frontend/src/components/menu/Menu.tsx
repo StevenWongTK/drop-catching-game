@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { MenuButton } from '../menu-button/MenuButton'
+import MenuButton from '../menu-button/MenuButton'
 
 const SMenu = styled.div`
     width: 300px;
@@ -21,7 +21,7 @@ const STitle = styled.div`
     margin-bottom: 20px;
 `
 
-export const Menu = ({
+const Menu = ({
     onStartGameButton,
     onOpenLeaderboardButton,
 }: {
@@ -36,3 +36,5 @@ export const Menu = ({
         </SMenu>
     )
 }
+
+export default Menu

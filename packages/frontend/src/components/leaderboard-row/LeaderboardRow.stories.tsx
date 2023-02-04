@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { LeaderboardRow } from './LeaderboardRow'
+import LeaderboardRow from './LeaderboardRow'
 
 export default {
     title: 'LeaderboardRow',

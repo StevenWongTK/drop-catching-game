@@ -1,11 +1,11 @@
+import { useState, createContext } from 'react'
 import styled from 'styled-components'
 import bg2 from './assets/bg2.png'
-import { MenuContainer } from './features/menu/MenuContainer'
-import { LeaderboardContainer } from './features/leaderboard/LeaderboardContainer'
-import { TutorialContainer } from './features/tutorial/TutorialContainer'
-import { Game } from './features/game/Game'
-import { ResultModalContainer } from './features/leaderboard/ResultModalContainer'
-import { useState, createContext } from 'react'
+import MenuContainer from './features/menu/MenuContainer'
+import LeaderboardContainer from './features/leaderboard/LeaderboardContainer'
+import TutorialContainer from './features/tutorial/TutorialContainer'
+import Game from './features/game/Game'
+import ResultModalContainer from './features/leaderboard/ResultModalContainer'
 
 // TODO: remove
 // #1c242f

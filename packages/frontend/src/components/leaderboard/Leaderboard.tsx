@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { LeaderboardRow } from '../leaderboard-row/LeaderboardRow'
+import LeaderboardRow from '../leaderboard-row/LeaderboardRow'
 import { ILeaderRecord } from '../../features/leaderboard/type'
 
 const SContainer = styled.div`
@@ -56,7 +56,7 @@ const SPrevioudButton = styled.div`
     justify-content: center;
 `
 
-export const Leaderboard = ({
+const Leaderboard = ({
     leaderRecords,
     onPreviousButton,
 }: {
@@ -80,3 +80,5 @@ export const Leaderboard = ({
         </SContainer>
     )
 }
+
+export default Leaderboard

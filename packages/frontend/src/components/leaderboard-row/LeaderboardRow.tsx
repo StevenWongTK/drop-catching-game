@@ -19,7 +19,7 @@ const SScore = styled.div`
     margin-left: auto;
 `
 
-export const LeaderboardRow = ({
+const LeaderboardRow = ({
     rank,
     name,
     score,
@@ -34,3 +34,4 @@ export const LeaderboardRow = ({
         </SLeaderboardRow>
     )
 }
+export default LeaderboardRow

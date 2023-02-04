@@ -8,7 +8,7 @@ const SFlex = styled.div`
     gap: 32px;
 `
 
-export const SlideThree = () => {
+const SlideThree = () => {
     return (
         <STutorialBackground>
             <SFlex>
@@ -25,3 +25,5 @@ export const SlideThree = () => {
         </STutorialBackground>
     )
 }
+
+export default SlideThree

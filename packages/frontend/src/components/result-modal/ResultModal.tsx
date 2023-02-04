@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import { MenuButton } from '../menu-button/MenuButton'
 import { useRef } from 'react'
+import styled from 'styled-components'
+import MenuButton from '../menu-button/MenuButton'
 
 const SResultModal = styled.div`
     width: 300px;
@@ -30,7 +30,7 @@ const SButtonGroup = styled.div`
     gap: 8px;
 `
 
-export const ResultModal = ({
+const ResultModal = ({
     score,
     onSendButton,
 }: {
@@ -59,3 +59,5 @@ export const ResultModal = ({
         </SResultModal>
     )
 }
+
+export default ResultModal

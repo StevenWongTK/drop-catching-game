@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Menu } from './Menu'
+import Menu from './Menu'
 
 export default {
     title: 'Menu',

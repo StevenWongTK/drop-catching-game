@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Drop } from './Drop'
+import Drop from './Drop'
 import e1 from '../../assets/e1.png'
 
 export default {

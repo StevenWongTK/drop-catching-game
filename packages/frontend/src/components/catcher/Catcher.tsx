@@ -9,7 +9,7 @@ const SCatcher = styled.img<{ x: number; y: number; size: number }>`
     transform: translate(-50%, -50%);
 `
 
-export const Catcher = ({
+const Catcher = ({
     image,
     x,
     y,
@@ -22,3 +22,5 @@ export const Catcher = ({
 }) => {
     return <SCatcher src={image} x={x} y={y} size={size} />
 }
+
+export default Catcher

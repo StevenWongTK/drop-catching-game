@@ -20,7 +20,7 @@ const STutorial = styled.div`
     }
 `
 
-export const Tutorial = () => {
+const Tutorial = () => {
     return (
         <STutorial>
             <Swiper
@@ -37,3 +37,5 @@ export const Tutorial = () => {
         </STutorial>
     )
 }
+
+export default Tutorial

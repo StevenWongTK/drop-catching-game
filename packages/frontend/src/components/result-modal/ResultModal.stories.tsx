@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { ResultModal } from './ResultModal'
+import ResultModal from './ResultModal'
 
 export default {
     title: 'ResultModal',

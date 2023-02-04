@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Catcher } from './Catcher'
+import Catcher from './Catcher'
 import boat from '../../assets/boat.png'
 
 export default {

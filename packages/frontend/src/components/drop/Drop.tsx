@@ -9,7 +9,7 @@ const SDrops = styled.img<{ x: number; y: number; size: number }>`
     transform: translate(-50%, -50%);
 `
 
-export const Drop = ({
+const Drop = ({
     image,
     x,
     y,
@@ -26,3 +26,5 @@ export const Drop = ({
 }) => {
     return <SDrops src={image} x={x} y={y} size={size} />
 }
+
+export default Drop
