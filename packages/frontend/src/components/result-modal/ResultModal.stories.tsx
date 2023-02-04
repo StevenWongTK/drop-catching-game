@@ -6,27 +6,10 @@ export default {
     component: ResultModal,
 } as ComponentMeta<typeof ResultModal>
 
-const startGame = () => {
-    console.log('Start Game Button Clicked!')
-}
-
-const openLeaderboard = () => {
-    console.log('Open Leaderboard Button Clicked!')
+const handleSend = () => {
+    console.log('Sent!')
 }
 
 export const Default: ComponentStory<typeof ResultModal> = () => (
-    <ResultModal
-        isNewRecord={false}
-        score={2000}
-        onStartGameButton={startGame}
-        onBackToMenuButton={openLeaderboard}
-    />
-)
-export const NewRecord: ComponentStory<typeof ResultModal> = () => (
-    <ResultModal
-        isNewRecord={true}
-        score={2000}
-        onStartGameButton={startGame}
-        onBackToMenuButton={openLeaderboard}
-    />
+    <ResultModal score={2000} onSendButton={handleSend} />
 )

@@ -28,7 +28,7 @@ const SField = styled.div<{ src: string }>`
 `
 
 export const Game = () => {
-    const isGameFieldOpened = useSelector(isGameFieldOpenedSelector)
+    const isOpened = useSelector(isGameFieldOpenedSelector)
     const isGameStarted = useSelector(isGameStartedSelector)
     const dispatch = useDispatch()
     const fieldRef = useRef<HTMLDivElement>(null)
@@ -37,10 +37,8 @@ export const Game = () => {
     const requestRef = useRef<number>(0)
     const { score } = useContext(scoreContext)
 
-    const { drops, spawnDrops, catcher, onCursorMove, advanceStep } = useGame(
-        fieldRef,
-        requestRef
-    )
+    const { initGame, drops, spawnDrops, catcher, onCursorMove, advanceStep } =
+        useGame(fieldRef, requestRef)
 
     useEffect(() => {
         const stop = () => {
@@ -71,11 +69,12 @@ export const Game = () => {
         return () => stop()
     }, [advanceStep, isGameStarted])
 
-    return isGameFieldOpened ? (
+    useEffect(() => {
+        initGame()
+    }, [initGame, isOpened])
+
+    return isOpened ? (
         <SField src={bg1} ref={fieldRef} onMouseMove={onCursorMove}>
-            {/* <button onClick={() => setIsStarted(!isGameStarted)}>
-                {'start'}
-            </button> */}
             <div>{`Score: ${score}`}</div>
             {drops.map((drop, index) => {
                 return <Drop key={`drop-${index}`} {...drop} />

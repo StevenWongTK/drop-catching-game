@@ -27,6 +27,12 @@ export const useGame = (
     const [cursorX, setCursorX] = useState(0)
     const { score, setScore } = useContext(scoreContext)
 
+    const initGame = useCallback(() => {
+        setScore(0)
+        setDrops([])
+        setCatcher(DEFAULT_CATCHER)
+    }, [setScore])
+
     const createDrops = useCallback(() => {
         if (!fieldRef.current) {
             return {} as IDrop
@@ -108,6 +114,7 @@ export const useGame = (
 
     // TODO: delete unused output
     return {
+        initGame,
         drops,
         spawnDrops,
         catcher,

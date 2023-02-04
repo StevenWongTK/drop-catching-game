@@ -1,16 +1,16 @@
 import axios from 'axios'
-
-interface IRecord {
-    name: string
-    score: number
-}
+import { ILeaderRecord } from '../features/leaderboard/type'
 
 const baseURL = 'http://localhost:8000'
 
-export const setRecord = (record: IRecord) => {
-    console.log('record:', record)
-    axios.post(`${baseURL}/api/record/set`, {
+export const setRecords = (record: ILeaderRecord) => {
+    axios.post(`${baseURL}/record/set`, {
         name: record.name,
         score: record.score,
     })
+}
+
+export const getRecords = async () => {
+    const res = await axios.get(`${baseURL}/record/get-top`)
+    return res.data as ILeaderRecord[]
 }

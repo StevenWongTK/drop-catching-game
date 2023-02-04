@@ -16,11 +16,11 @@ recordsRouter.post('/set', async (req: Request, res: Response) => {
     }
 })
 
-recordsRouter.get('/getTop', async (req: Request, res: Response) => {
+recordsRouter.get('/get-top', async (req: Request, res: Response) => {
     try {
         const data = await RecordModel.find({}, { name: 1, score: 1 })
             .sort({ score: -1 })
-            .limit(3)
+            .limit(100)
         res.json(data)
     } catch (error: any) {
         res.status(500).json({ message: error.message })

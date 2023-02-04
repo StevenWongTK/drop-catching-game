@@ -32,38 +32,28 @@ const SButtonGroup = styled.div`
 
 export const ResultModal = ({
     score,
-    isNewRecord = false,
-    onStartGameButton,
-    onBackToMenuButton,
+    onSendButton,
 }: {
     score: number
-    isNewRecord: boolean
-    onStartGameButton: (name?: string) => void
-    onBackToMenuButton: (name?: string) => void
+    onSendButton: (name?: string) => void
 }) => {
     const inputRef = useRef<HTMLInputElement>(null)
     return (
         <SResultModal>
             <div>
-                Your final score is: <b>{score}</b>
+                Well done! Your final score is: <b>{score}</b>
             </div>
-            {isNewRecord && (
-                <>
-                    <div>
-                        Congratuation! You win most of the pirate. Please leave
-                        you name here to let others know!
-                    </div>
-                    <SInput ref={inputRef} />
-                </>
-            )}
+
+            <div>
+                You can leave you name here to let others know what strong you
+                are!
+            </div>
+            <SInput ref={inputRef} />
+
             <SButtonGroup>
                 <MenuButton
-                    label='Start New Game'
-                    onClick={() => onStartGameButton(inputRef.current?.value)}
-                />
-                <MenuButton
-                    label='Back to Menu'
-                    onClick={() => onBackToMenuButton(inputRef.current?.value)}
+                    label='Send'
+                    onClick={() => onSendButton(inputRef.current?.value)}
                 />
             </SButtonGroup>
         </SResultModal>

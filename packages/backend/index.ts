@@ -27,7 +27,7 @@ const database = mongoose.connection
 // handle CORS
 app.use(cors())
 app.use(bodyParser.json())
-app.use('/api/record', recordsRouter)
+app.use('/record', recordsRouter)
 
 // TODO: to be removed
 app.get('/', (req: Request, res: Response) => {

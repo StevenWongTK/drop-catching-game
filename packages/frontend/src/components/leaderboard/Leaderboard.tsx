@@ -28,9 +28,19 @@ const SRecordsContainer = styled.div`
     flex-direction: column;
     gap: 8px;
     overflow-y: auto;
+    padding-right: 4px;
 
     > * {
         flex-shrink: 0;
+    }
+
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #1c242f;
+        border-radius: 4px;
     }
 `
 
