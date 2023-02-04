@@ -1,6 +1,5 @@
 import { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components'
 import ResultModal from '../../components/result-modal/ResultModal'
 import {
     closeGameFieldAction,
@@ -11,13 +10,7 @@ import {
 } from '../../store/slice'
 import { setRecords } from '../../api/api'
 import { scoreContext } from '../../App'
-
-const SResultModalContainer = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-`
+import { SModalWrapper } from '../../components/modal-wrapper/style'
 
 const ResultModalContainer = () => {
     const dispatch = useDispatch()
@@ -33,9 +26,9 @@ const ResultModalContainer = () => {
     }
 
     return isOpened ? (
-        <SResultModalContainer>
+        <SModalWrapper>
             <ResultModal score={score} onSendButton={handleSend}></ResultModal>
-        </SResultModalContainer>
+        </SModalWrapper>
     ) : (
         <></>
     )

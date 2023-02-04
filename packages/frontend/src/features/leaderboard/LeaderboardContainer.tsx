@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import Leaderboard from '../../components/leaderboard/Leaderboard'
 import {
@@ -6,13 +5,7 @@ import {
     isLeaderboardOpenedSelector,
 } from '../../store/slice'
 import useLeaderboard from './useLeaderboard'
-
-const SLeaderboardWrapper = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-`
+import { SModalWrapper } from '../../components/modal-wrapper/style'
 
 const LeaderboardContainer = () => {
     const isOpened = useSelector(isLeaderboardOpenedSelector)
@@ -24,12 +17,12 @@ const LeaderboardContainer = () => {
     }
 
     return isOpened ? (
-        <SLeaderboardWrapper>
+        <SModalWrapper>
             <Leaderboard
                 leaderRecords={records}
                 onPreviousButton={closeLeaderboard}
             />
-        </SLeaderboardWrapper>
+        </SModalWrapper>
     ) : (
         <></>
     )

@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components'
 import Menu from '../../components/menu/Menu'
 import {
     closeMenuAction,
@@ -9,13 +8,8 @@ import {
     openTutorialAction,
     startGameAction,
 } from '../../store/slice'
+import { SModalWrapper } from '../../components/modal-wrapper/style'
 
-const SMenuWrapper = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-`
 const MenuContainer = () => {
     const isOpened = useSelector(isMenuOpenedSelector)
     const dispatch = useDispatch()
@@ -35,12 +29,12 @@ const MenuContainer = () => {
     }
 
     return isOpened ? (
-        <SMenuWrapper>
+        <SModalWrapper>
             <Menu
                 onStartGameButton={startGame}
                 onOpenLeaderboardButton={openLeaderboard}
             />
-        </SMenuWrapper>
+        </SModalWrapper>
     ) : (
         <></>
     )
