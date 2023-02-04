@@ -5,10 +5,20 @@ import { LeaderboardContainer } from './features/leaderboard/LeaderboardContaine
 import { TutorialContainer } from './features/tutorial/TutorialContainer'
 import { Game } from './features/game/Game'
 import { ResultModalContainer } from './features/leaderboard/ResultModalContainer'
+import { useState, createContext } from 'react'
 
 // TODO: remove
 // #1c242f
 // #556e84
+
+type IScoreContext = {
+    score: number
+    setScore: React.Dispatch<React.SetStateAction<number>>
+}
+export const scoreContext = createContext<IScoreContext>({
+    score: 0,
+    setScore: () => {},
+})
 
 const SApp = styled.div<{ src: string }>`
     width: 100%;
@@ -17,14 +27,17 @@ const SApp = styled.div<{ src: string }>`
 `
 
 const App = () => {
+    const [score, setScore] = useState(0)
     return (
-        <SApp src={bg2}>
-            <Game />
-            <TutorialContainer />
-            <MenuContainer />
-            <LeaderboardContainer />
-            <ResultModalContainer />
-        </SApp>
+        <scoreContext.Provider value={{ score, setScore }}>
+            <SApp src={bg2}>
+                <Game />
+                <TutorialContainer />
+                <MenuContainer />
+                <LeaderboardContainer />
+                <ResultModalContainer />
+            </SApp>
+        </scoreContext.Provider>
     )
 }
 

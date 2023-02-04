@@ -7,13 +7,14 @@ import {
     startGameAction,
 } from '../../store/slice'
 import { setRecord } from '../../api/api'
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
+import { scoreContext } from '../../App'
 
 export const ResultModalContainer = () => {
     const isNewRecord = true
-    const score = 123
     const dispatch = useDispatch()
     const isOpened = useSelector(isResultModalOpenedSelector)
+    const { score } = useContext(scoreContext)
 
     useEffect(() => console.log('isOpened?:', isOpened), [isOpened])
 

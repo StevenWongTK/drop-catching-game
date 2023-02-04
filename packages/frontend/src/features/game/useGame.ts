@@ -4,6 +4,7 @@ import {
     RefObject,
     useCallback,
     useState,
+    useContext,
 } from 'react'
 import {
     CATCHER_SPEED,
@@ -15,6 +16,7 @@ import {
 } from './constants'
 import { ICatcher, IDrop } from './types'
 import { checkColliding } from './helper'
+import { scoreContext } from '../../App'
 
 export const useGame = (
     fieldRef: RefObject<HTMLDivElement>,
@@ -22,8 +24,8 @@ export const useGame = (
 ) => {
     const [drops, setDrops] = useState<IDrop[]>([])
     const [catcher, setCatcher] = useState<ICatcher>(DEFAULT_CATCHER)
-    const [score, setScore] = useState(0)
     const [cursorX, setCursorX] = useState(0)
+    const { score, setScore } = useContext(scoreContext)
 
     const createDrops = useCallback(() => {
         if (!fieldRef.current) {
@@ -71,7 +73,7 @@ export const useGame = (
             })
             return newDrops
         })
-    }, [catcher, fieldRef, score])
+    }, [catcher, fieldRef, score, setScore])
 
     const onCursorMove = (event: MouseEvent) => {
         if (!fieldRef.current) {

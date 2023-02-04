@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useContext } from 'react'
 import { Drop } from '../../components/drop/Drop'
 import { useGame } from './useGame'
 import { CATCHER_SIZE, DROP_INTERVAL, GAME_DURATION } from './constants'
@@ -12,6 +12,7 @@ import {
     openResultModalAction,
 } from '../../store/slice'
 import bg1 from '../../assets/bg1.png'
+import { scoreContext } from '../../App'
 
 const SField = styled.div<{ src: string }>`
     position: absolute;
@@ -34,9 +35,12 @@ export const Game = () => {
     const intervalRef = useRef<ReturnType<typeof setInterval>>()
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
     const requestRef = useRef<number>(0)
+    const { score } = useContext(scoreContext)
 
-    const { drops, spawnDrops, catcher, score, onCursorMove, advanceStep } =
-        useGame(fieldRef, requestRef)
+    const { drops, spawnDrops, catcher, onCursorMove, advanceStep } = useGame(
+        fieldRef,
+        requestRef
+    )
 
     useEffect(() => {
         const stop = () => {

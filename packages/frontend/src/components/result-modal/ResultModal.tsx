@@ -14,6 +14,8 @@ const SResultModal = styled.div`
     background-color: #556e84;
     text-align: center;
     justify-content: space-evenly;
+    padding: 8px;
+    box-sizing: border-box;
 `
 
 const SInput = styled.input`
