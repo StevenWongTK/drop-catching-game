@@ -22,7 +22,6 @@ const storeSlice = createSlice({
     name: 'store',
     initialState,
     reducers: {
-        // TODO: Combine some of action later
         openMenuAction: (state) => {
             state.isMenuOpened = true
         },

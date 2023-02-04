@@ -7,10 +7,6 @@ import TutorialContainer from './features/tutorial/TutorialContainer'
 import Game from './features/game/Game'
 import ResultModalContainer from './features/leaderboard/ResultModalContainer'
 
-// TODO: remove
-// #1c242f
-// #556e84
-
 type IScoreContext = {
     score: number
     setScore: React.Dispatch<React.SetStateAction<number>>

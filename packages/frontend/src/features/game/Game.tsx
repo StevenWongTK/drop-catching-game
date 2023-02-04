@@ -1,17 +1,12 @@
 import { useEffect, useRef, useContext } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { scoreContext } from '../../App'
 import { useGame } from './useGame'
-import { CATCHER_SIZE, DROP_INTERVAL, GAME_DURATION } from './constants'
+import { CATCHER_SIZE } from './constants'
 import Catcher from '../../components/catcher/Catcher'
 import Drop from '../../components/drop/Drop'
-import {
-    endGameAction,
-    isGameFieldOpenedSelector,
-    isGameStartedSelector,
-    openResultModalAction,
-} from '../../store/slice'
+import { isGameFieldOpenedSelector } from '../../store/slice'
 import bg1 from '../../assets/bg1.png'
 
 const SField = styled.div<{ src: string }>`
@@ -29,45 +24,9 @@ const SField = styled.div<{ src: string }>`
 
 const Game = () => {
     const isOpened = useSelector(isGameFieldOpenedSelector)
-    const isGameStarted = useSelector(isGameStartedSelector)
-    const dispatch = useDispatch()
     const fieldRef = useRef<HTMLDivElement>(null)
-    const intervalRef = useRef<ReturnType<typeof setInterval>>()
-    const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
-    const requestRef = useRef<number>(0)
     const { score } = useContext(scoreContext)
-
-    const { initGame, drops, spawnDrops, catcher, onCursorMove, advanceStep } =
-        useGame(fieldRef, requestRef)
-
-    useEffect(() => {
-        const stop = () => {
-            intervalRef.current && clearInterval(intervalRef.current)
-        }
-        if (isGameStarted) {
-            intervalRef.current = setInterval(spawnDrops, DROP_INTERVAL)
-            timeoutRef.current = setTimeout(() => {
-                dispatch(endGameAction())
-                dispatch(openResultModalAction())
-            }, GAME_DURATION)
-        } else {
-            stop()
-        }
-        return () => stop()
-    }, [dispatch, isGameStarted, spawnDrops])
-
-    useEffect(() => {
-        const stop = () => {
-            requestRef.current && cancelAnimationFrame(requestRef.current)
-        }
-        if (isGameStarted) {
-            // console.log('looping')
-            requestRef.current = requestAnimationFrame(advanceStep)
-        } else {
-            stop()
-        }
-        return () => stop()
-    }, [advanceStep, isGameStarted])
+    const { initGame, drops, catcher, onCursorMove } = useGame(fieldRef)
 
     useEffect(() => {
         initGame()

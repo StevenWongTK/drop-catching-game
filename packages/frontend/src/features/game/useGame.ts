@@ -1,11 +1,13 @@
 import {
     MouseEvent,
-    MutableRefObject,
     RefObject,
     useCallback,
     useState,
     useContext,
+    useEffect,
+    useRef,
 } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
     CATCHER_SPEED,
     DEFAULT_CATCHER,
@@ -17,15 +19,23 @@ import {
 import { ICatcher, IDrop } from './types'
 import { checkColliding } from './helper'
 import { scoreContext } from '../../App'
+import {
+    endGameAction,
+    isGameStartedSelector,
+    openResultModalAction,
+} from '../../store/slice'
+import { DROP_INTERVAL, GAME_DURATION } from './constants'
 
-export const useGame = (
-    fieldRef: RefObject<HTMLDivElement>,
-    requestRef: MutableRefObject<number>
-) => {
+export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
     const [drops, setDrops] = useState<IDrop[]>([])
     const [catcher, setCatcher] = useState<ICatcher>(DEFAULT_CATCHER)
     const [cursorX, setCursorX] = useState(0)
     const { score, setScore } = useContext(scoreContext)
+    const intervalRef = useRef<ReturnType<typeof setInterval>>()
+    const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
+    const requestRef = useRef<number>(0)
+    const isGameStarted = useSelector(isGameStartedSelector)
+    const dispatch = useDispatch()
 
     const initGame = useCallback(() => {
         setScore(0)
@@ -53,7 +63,6 @@ export const useGame = (
     }, [fieldRef])
 
     const spawnDrops = useCallback(() => {
-        console.log('spawnDrops')
         setDrops((oldDrops) => [...oldDrops, createDrops()])
     }, [createDrops])
 
@@ -112,14 +121,39 @@ export const useGame = (
         requestRef.current = requestAnimationFrame(advanceStep)
     }, [requestRef, updateCatcher, updateDropY])
 
-    // TODO: delete unused output
+    useEffect(() => {
+        const stop = () => {
+            intervalRef.current && clearInterval(intervalRef.current)
+        }
+        if (isGameStarted) {
+            intervalRef.current = setInterval(spawnDrops, DROP_INTERVAL)
+            timeoutRef.current = setTimeout(() => {
+                dispatch(endGameAction())
+                dispatch(openResultModalAction())
+            }, GAME_DURATION)
+        } else {
+            stop()
+        }
+        return () => stop()
+    }, [dispatch, isGameStarted, spawnDrops])
+
+    useEffect(() => {
+        const stop = () => {
+            requestRef.current && cancelAnimationFrame(requestRef.current)
+        }
+        if (isGameStarted) {
+            // console.log('looping')
+            requestRef.current = requestAnimationFrame(advanceStep)
+        } else {
+            stop()
+        }
+        return () => stop()
+    }, [advanceStep, isGameStarted])
+
     return {
         initGame,
         drops,
-        spawnDrops,
         catcher,
-        score,
         onCursorMove,
-        advanceStep,
     }
 }

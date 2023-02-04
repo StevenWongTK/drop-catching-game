@@ -14,15 +14,11 @@ const Drop = ({
     x,
     y,
     size,
-}: // index,
-// score,
-{
+}: {
     image: string
     x: number
     y: number
     size: number
-    // index: number
-    // score: number
 }) => {
     return <SDrops src={image} x={x} y={y} size={size} />
 }
