@@ -17,9 +17,13 @@ export const scoreContext = createContext<IScoreContext>({
 })
 
 const SApp = styled.div<{ src: string }>`
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     background-image: url(${(props) => props.src});
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 const App = () => {

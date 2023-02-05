@@ -7,3 +7,14 @@ export const checkColliding = (drop: IDrop, catcher: ICatcher) => {
 
     return xColliding && yColliding
 }
+
+export const getResponsiveHeight = (
+    targetValue: number,
+    fieldHeight: number
+) => {
+    return (targetValue * fieldHeight) / 1080
+}
+
+export const getResponsiveWidth = (targetValue: number, fieldWidth: number) => {
+    return (targetValue * fieldWidth) / 1920
+}

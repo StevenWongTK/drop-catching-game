@@ -6,9 +6,11 @@ import {
     useContext,
     useEffect,
     useRef,
+    TouchEvent,
 } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+    CATCHER_SIZE,
     CATCHER_SPEED,
     DEFAULT_CATCHER,
     DROPS_LIST,
@@ -17,7 +19,7 @@ import {
     DROP_SPEED,
 } from './constants'
 import { ICatcher, IDrop } from './types'
-import { checkColliding } from './helper'
+import { checkColliding, getResponsiveWidth } from './helper'
 import { scoreContext } from '../../App'
 import {
     endGameAction,
@@ -25,6 +27,7 @@ import {
     openResultModalAction,
 } from '../../store/slice'
 import { DROP_INTERVAL, GAME_DURATION } from './constants'
+import { current } from '@reduxjs/toolkit'
 
 export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
     const [drops, setDrops] = useState<IDrop[]>([])
@@ -36,7 +39,8 @@ export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
     const requestRef = useRef<number>(0)
     const isGameStarted = useSelector(isGameStartedSelector)
     const dispatch = useDispatch()
-
+    // const fieldWidth = fieldRef.current?.offsetWidth || 0
+    // const fieldHeight = fieldRef.current?.offsetHeight || 0
     const initGame = useCallback(() => {
         setScore(0)
         setDrops([])
@@ -44,23 +48,20 @@ export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
     }, [setScore])
 
     const createDrops = useCallback(() => {
-        if (!fieldRef.current) {
-            return {} as IDrop
-        }
         const image = DROPS_LIST[Math.floor(Math.random() * DROPS_LIST.length)]
-        const x =
-            (Math.floor(Math.random() * 100) * fieldRef.current.offsetWidth) /
-            100
+        //TODO
+        const x = (Math.floor(Math.random() * 100) * 1080) / 100
         const score = DROPS_SCORE_MAP[image]
 
         return {
             image,
             x,
             y: 0,
+            // size: getResponsiveWidth(DROP_SIZE, fieldWidth),
             size: DROP_SIZE,
             score,
         }
-    }, [fieldRef])
+    }, [])
 
     const spawnDrops = useCallback(() => {
         setDrops((oldDrops) => [...oldDrops, createDrops()])
@@ -70,16 +71,14 @@ export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
         setDrops((oldDrops) => {
             const newDrops: IDrop[] = []
             oldDrops.forEach((drop) => {
-                const newY = drop.y + DROP_SPEED / 60
+                const newY =
+                    // drop.y + getResponsiveHeight(DROP_SPEED / 60, fieldHeight)
+                    drop.y + DROP_SPEED / 60
                 const isColliding = checkColliding(drop, catcher)
                 if (isColliding) {
                     setScore(score + drop.score)
                 }
-                if (
-                    fieldRef.current &&
-                    newY <= fieldRef.current.offsetHeight &&
-                    !isColliding
-                ) {
+                if (newY <= 1080 && !isColliding) {
                     newDrops.push({
                         ...drop,
                         y: newY,
@@ -88,7 +87,7 @@ export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
             })
             return newDrops
         })
-    }, [catcher, fieldRef, score, setScore])
+    }, [catcher, score, setScore])
 
     const onCursorMove = (event: MouseEvent) => {
         if (!fieldRef.current) {
@@ -100,16 +99,42 @@ export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
         )
     }
 
+    const onTouchMove = (event: TouchEvent) => {
+        if (!fieldRef.current) {
+            return
+        }
+        setCursorX(
+            event.changedTouches[0].clientX -
+                (fieldRef.current.offsetLeft - fieldRef.current.offsetWidth / 2)
+        )
+    }
+
     const updateCatcher = useCallback(() => {
         setCatcher((oldCatcher) => {
-            const detlaX = cursorX - oldCatcher.x
+            const detlaX =
+                cursorX -
+                getResponsiveWidth(
+                    oldCatcher.x,
+                    fieldRef.current?.offsetWidth || 0
+                )
             let newCatcherX
-            if (5 > detlaX && detlaX > -5) {
+            const buffer = getResponsiveWidth(
+                CATCHER_SIZE / 2,
+                fieldRef.current?.offsetWidth || 0
+            )
+            // const buffer = CATCHER_SIZE / 2
+            if (buffer > detlaX && detlaX > -buffer) {
                 newCatcherX = oldCatcher.x
             } else if (detlaX > 1) {
-                newCatcherX = oldCatcher.x + CATCHER_SPEED / 60
+                newCatcherX =
+                    oldCatcher.x +
+                    // getResponsiveWidth(CATCHER_SPEED / 60, fieldWidth)
+                    CATCHER_SPEED / 60
             } else {
-                newCatcherX = oldCatcher.x - CATCHER_SPEED / 60
+                newCatcherX =
+                    oldCatcher.x -
+                    // getResponsiveWidth(CATCHER_SPEED / 60, fieldWidth)
+                    CATCHER_SPEED / 60
             }
             return { ...oldCatcher, x: newCatcherX }
         })
@@ -154,5 +179,6 @@ export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
         drops,
         catcher,
         onCursorMove,
+        onTouchMove,
     }
 }
