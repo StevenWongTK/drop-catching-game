@@ -9,8 +9,8 @@ recordsRouter.post('/set', async (req: Request, res: Response) => {
         score: req.body.score,
     })
     try {
-        const recordToSave = await newRecord.save()
-        res.status(200).json(recordToSave)
+        await newRecord.save()
+        res.status(200)
     } catch (error: any) {
         res.status(400).json({ message: error.message })
     }
