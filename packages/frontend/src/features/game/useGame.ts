@@ -27,7 +27,6 @@ import {
     openResultModalAction,
 } from '../../store/slice'
 import { DROP_INTERVAL, GAME_DURATION } from './constants'
-import { current } from '@reduxjs/toolkit'
 
 export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
     const [drops, setDrops] = useState<IDrop[]>([])
@@ -138,7 +137,7 @@ export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
             }
             return { ...oldCatcher, x: newCatcherX }
         })
-    }, [cursorX])
+    }, [cursorX, fieldRef])
 
     const advanceStep = useCallback(() => {
         updateCatcher()
