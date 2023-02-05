@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from 'express'
+import express, { Express } from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import recordsRouter from './routes/RecordsRouter'
@@ -23,16 +23,10 @@ try {
     throw new Error('Fail to connect MongoDB.')
 }
 
-const database = mongoose.connection
 // handle CORS
 app.use(cors())
 app.use(bodyParser.json())
 app.use('/record', recordsRouter)
-
-// TODO: to be removed
-app.get('/', (req: Request, res: Response) => {
-    res.send('Express + TypeScript Server')
-})
 
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`)

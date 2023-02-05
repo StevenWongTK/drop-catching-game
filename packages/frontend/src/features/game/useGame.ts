@@ -133,7 +133,6 @@ export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
     const advanceStep = useCallback(() => {
         updateCatcher()
         updateDropY()
-        // requestRef.current = requestAnimationFrame(advanceStep)
     }, [updateCatcher, updateDropY])
 
     useEffect(() => {
