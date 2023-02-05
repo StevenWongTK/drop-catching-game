@@ -142,7 +142,6 @@ export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
             requestRef.current && cancelAnimationFrame(requestRef.current)
         }
         if (isGameStarted) {
-            // console.log('looping')
             requestRef.current = requestAnimationFrame(advanceStep)
         } else {
             stop()

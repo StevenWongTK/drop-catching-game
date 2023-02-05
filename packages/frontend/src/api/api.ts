@@ -11,6 +11,6 @@ export const setRecords = (record: ILeaderRecord) => {
 }
 
 export const getRecords = async () => {
-    const res = await axios.get(`${baseURL}/record/get-top`)
+    const res = await axios.get(`${baseURL}/record/get-top-100`)
     return res.data as ILeaderRecord[]
 }

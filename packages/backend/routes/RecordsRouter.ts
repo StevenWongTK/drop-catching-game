@@ -16,7 +16,7 @@ recordsRouter.post('/set', async (req: Request, res: Response) => {
     }
 })
 
-recordsRouter.get('/get-top', async (req: Request, res: Response) => {
+recordsRouter.get('/get-top-100', async (req: Request, res: Response) => {
     try {
         const data = await RecordModel.find({}, { name: 1, score: 1 })
             .sort({ score: -1 })
