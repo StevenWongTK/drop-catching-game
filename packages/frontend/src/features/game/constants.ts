@@ -8,8 +8,12 @@ import boat from '../../assets/boat.png'
 
 /* GAME */
 // game duration in ms
-export const GAME_DURATION = 5000
+export const GAME_DURATION = 60000
+
+/* GAME-FIELD */
 export const BACKGROUND_RATIO = 9 / 16
+export const DEFAULT_WIDTH = 1920
+export const DEFAULT_HEIGHT = 1080
 
 /* DROP */
 // drop speed in px/second (in size of 1920x1080)
@@ -39,7 +43,7 @@ export const DROPS_SCORE_MAP = {
 export const CATCHER_SPEED = 2000
 // drop width/height in px (in size of 1920x1080)
 export const CATCHER_SIZE = 80
-//TODO ratio?
+// catch starting y axis in px (in size of 1920x1080)
 export const CATCHER_STARTING_Y = 850
 
 export const DEFAULT_CATCHER = {
