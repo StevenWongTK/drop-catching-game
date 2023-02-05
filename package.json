@@ -5,6 +5,7 @@
     "workspaces": [
         "packages/*"
     ],
+    "postinstall": "(cd packages/frontend && npm install); (cd packages/backend && npm install);",
     "scripts": {
         "start": "lerna run --parallel start"
     },
