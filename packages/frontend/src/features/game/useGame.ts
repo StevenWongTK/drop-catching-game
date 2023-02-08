@@ -33,7 +33,7 @@ import { DROP_INTERVAL, GAME_DURATION } from './constants'
 export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
     const [drops, setDrops] = useState<IDrop[]>([])
     const [catcher, setCatcher] = useState<ICatcher>(DEFAULT_CATCHER)
-    const [cursorX, setCursorX] = useState(0)
+    const cursorXRef = useRef<number>(0)
     const { score, setScore } = useContext(scoreContext)
     const intervalRef = useRef<ReturnType<typeof setInterval>>()
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
@@ -90,26 +90,24 @@ export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
         if (!fieldRef.current) {
             return
         }
-        setCursorX(
+        cursorXRef.current =
             event.clientX -
-                (fieldRef.current.offsetLeft - fieldRef.current.offsetWidth / 2)
-        )
+            (fieldRef.current.offsetLeft - fieldRef.current.offsetWidth / 2)
     }
 
     const onTouchMove = (event: TouchEvent) => {
         if (!fieldRef.current) {
             return
         }
-        setCursorX(
+        cursorXRef.current =
             event.changedTouches[0].clientX -
-                (fieldRef.current.offsetLeft - fieldRef.current.offsetWidth / 2)
-        )
+            (fieldRef.current.offsetLeft - fieldRef.current.offsetWidth / 2)
     }
 
     const updateCatcher = useCallback(() => {
         setCatcher((oldCatcher) => {
             const detlaX =
-                cursorX -
+                cursorXRef.current -
                 getResponsiveWidth(
                     oldCatcher.x,
                     fieldRef.current?.offsetWidth || 0
@@ -128,7 +126,7 @@ export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
             }
             return { ...oldCatcher, x: newCatcherX }
         })
-    }, [cursorX, fieldRef])
+    }, [fieldRef])
 
     const advanceStep = useCallback(() => {
         updateCatcher()
@@ -156,6 +154,7 @@ export const useGame = (fieldRef: RefObject<HTMLDivElement>) => {
             requestRef.current && cancelAnimationFrame(requestRef.current)
         }
         if (isGameStarted) {
+            console.log('123')
             requestRef.current = requestAnimationFrame(advanceStep)
         } else {
             stop()
