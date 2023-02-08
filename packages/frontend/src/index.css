@@ -6,6 +6,8 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     user-select: none;
+    /* disable iOS pull to refresh */
+    touch-action: none;
 }
 
 code {
